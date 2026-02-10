@@ -51,9 +51,7 @@ class NewsHeadlinesTracker:
             }
             response = requests.get(feed_url, headers=headers, timeout=10)
             if response.status_code != 200:
-                print(
-                    f"Error: HTTP {response.status_code} when fetching {self.source}"
-                )
+                print(f"Error: HTTP {response.status_code} when fetching {self.source}")
                 return None
 
             # Parse RSS XML
