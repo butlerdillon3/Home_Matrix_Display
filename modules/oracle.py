@@ -18,7 +18,7 @@ class OracleOfNonsense:
             # Default to the static folder in the project root
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             csv_path = os.path.join(
-                project_root, "static", "oracle_of_nonesesne_phrases.csv"
+                project_root, "static", "oracle-of-nonsense", "oracle_of_nonesesne_phrases.csv"
             )
 
         self.csv_path = csv_path

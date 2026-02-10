@@ -110,7 +110,7 @@ def get_text_width(font, text):
 
 def main():
     # Initialize clock display module
-    clock = ClockDisplay(time_format="24")
+    clock = ClockDisplay(time_format="12")
 
     # Configure the matrix
     # For 2 64x64 panels chained horizontally = 128x64 total display
@@ -136,8 +136,6 @@ def main():
     print("Clock Display Example Running!")
     print("Open http://localhost:8888/ in your browser to see it")
     print(f"Display: {display_width}x{display_height} pixels")
-    print("- Analog clock (left, centered)")
-    print("- Digital time (right, centered)")
     print("Press Ctrl+C to exit.")
 
     try:
@@ -146,13 +144,13 @@ def main():
             time_info = clock.get_current_time()
             timestamp = time_info["timestamp"]
 
-            # Extract hours, minutes, seconds
+            # Extract hours, minutes, seconds for analog clock
             hour = timestamp.hour
             minute = timestamp.minute
             second = timestamp.second
 
-            # Format digital time (HH:MM:SS)
-            digital_time = f"{hour:02d}:{minute:02d}:{second:02d}"
+            # Use formatted digital time from clock module (respects 12/24 hour format)
+            digital_time = time_info["time"]
 
             # Day
             day_abbr = time_info["day_of_week"]
@@ -178,7 +176,7 @@ def main():
             day_width = get_text_width(font, day_abbr)
 
             # Center each text line around the base position
-            time_x = digital_base_x - (time_width // 2)
+            time_x = digital_base_x - (time_width // 2) - 2
             date_x = digital_base_x - (date_width // 2)
             day_x = digital_base_x - (day_width // 2)
 
@@ -201,7 +199,7 @@ def main():
             line_height = 12
             total_text_height = line_height * 3  # 3 lines: time, date, day
             text_start_y = (
-                clock_center_y - (total_text_height // 2) + 10
+                clock_center_y - (total_text_height // 2) + 11
             )  # Offset for baseline
 
             # Draw digital time (yellow)

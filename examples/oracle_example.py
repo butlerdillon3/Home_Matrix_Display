@@ -103,14 +103,12 @@ def main():
     matrix = RGBMatrix(options=options)
     canvas = matrix.CreateFrameCanvas()
 
-    # Load Helvetica Regular 8 font (non-bold, smaller size)
+    # Load Times Roman 10 font for a more classical, philosophical appearance
     font = graphics.Font()
-    font.LoadFont("fonts/helvR08.bdf")
+    font.LoadFont("fonts/timR08.bdf")
 
-    # Load oracle crystal ball image (PNG with transparency support)
-    oracle_image = Image.open("static/Oracle-Of-Nonsense.png")
-    # Resize to 35x35 pixels to fit nicely on the display
-    oracle_image = oracle_image.resize((35, 35), Image.LANCZOS)
+    # Load oracle crystal ball image (BMP format)
+    oracle_image = Image.open("static/oracle-of-nonsense/Oracle-Of-Nonsense.bmp")
 
     # Display dimensions (total display size with chaining)
     display_width = options.cols * options.chain_length  # 64 * 2 = 128
@@ -124,8 +122,8 @@ def main():
     print("- New phrase every 10 seconds")
     print("Press Ctrl+C to exit.")
 
-    # Colors for different elements
-    phrase_color = graphics.Color(200, 255, 200)  # Brighter cyan-green for readability
+    # Warm orange color for text (#f8a736)
+    phrase_color = graphics.Color(248, 167, 54)
 
     try:
         while True:
@@ -138,23 +136,21 @@ def main():
 
                 # Draw crystal ball image on left side (centered vertically)
                 # Position image a bit more to the left to give text more room
-                image_x = 8  # Fixed position from left edge
+                image_x = 3  # Fixed position from left edge
                 image_y = (
                     display_height - oracle_image.height
                 ) // 2  # Center vertically
                 canvas.SetImage(oracle_image, image_x, image_y)
 
-                # Wrap the phrase text to fit the space to the right of the crystal ball
-                margin = 8  # Pixels from edge
                 # Text area starts after the crystal ball with some spacing
-                text_area_start = image_x + oracle_image.width + 8
-                text_area_width = display_width - text_area_start - margin
+                text_area_start = image_x + oracle_image.width + 3
+                text_area_width = display_width - text_area_start - 2
                 wrapped_lines = wrap_text(phrase, font, text_area_width)
 
                 # Calculate vertical centering for text
                 # Line height adjusted for Times Roman 8pt
                 line_height = 10
-                total_text_height = len(wrapped_lines) * line_height
+                total_text_height = (len(wrapped_lines) * line_height)+1
 
                 # Center text vertically in the display
                 # Account for font baseline (text is drawn from baseline, not top)
